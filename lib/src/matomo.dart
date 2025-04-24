@@ -50,6 +50,7 @@ class MatomoTracker {
     if (initialized && queue.isNotEmpty) {
       await dispatchActions();
     }
+    MatomoTracker._instance = MatomoTracker._internal();
     return MatomoTracker._instance;
   }
 
