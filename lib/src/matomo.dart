@@ -118,6 +118,13 @@ class MatomoTracker {
     );
   }
 
+  /// The active locale (language & country code) for the current user.
+  /// Set this to override the language reported the system-reported default locale of the device.
+  /// Attention: Changing the user locale might override visitor country if GeoIP is not enabled.
+  /// If you don't want this behavior, consider saving the user locale as a custom dimension:
+  /// https://matomo.org/guide/reporting-tools/custom-dimensions/
+  Locale? userLocale;
+
   /// Whether to attach `pvId` and `path` to `track...` calls automatically.
   ///
   /// There most actions can be associated with page views by setting a `pvId`
@@ -153,6 +160,7 @@ class MatomoTracker {
 
   bool _optOut = false;
   bool get optOut => _optOut;
+
   Future<void> setOptOut({required bool optOut}) async {
     _optOut = optOut;
     await _localStorage.setOptOut(optOut: optOut);
@@ -161,13 +169,20 @@ class MatomoTracker {
   bool _cookieless = false;
   bool get cookieless => _cookieless;
 
-  void setCookieless({
+  Future<void> setCookieless({
     required bool cookieless,
     LocalStorage? localStorage,
-  }) {
+  }) async {
     if (_cookieless == cookieless) return;
     _cookieless = cookieless;
     _setLocalStorage(localStorage);
+
+    if (cookieless) {
+      _visitor = const Visitor();
+    } else {
+      final visitorId = await _getVisitorId();
+      _visitor = Visitor(id: visitorId);
+    }
   }
 
   void _setLocalStorage(LocalStorage? localStorage) {
@@ -251,6 +266,7 @@ class MatomoTracker {
     Map<String, String> customHeaders = const {},
     String? userAgent,
     bool attachLastScreenInfo = true,
+    bool optOut = false,
   }) async {
     if (_initialized) {
       throw const AlreadyInitializedMatomoInstanceException();
@@ -332,7 +348,7 @@ class MatomoTracker {
       contentBase = 'https://${effectivePackageInfo.packageName}';
     }
 
-    _optOut = await _localStorage.getOptOut();
+    _optOut = (await _localStorage.getOptOut()) ?? optOut;
     unawaited(_localStorage.setOptOut(optOut: _optOut));
 
     log.fine(
@@ -542,6 +558,7 @@ class MatomoTracker {
       path: path,
       campaign: campaign,
       dimensions: dimensions,
+      userLocale: userLocale,
       pvId: pvId ?? randomAlphaNumeric(6),
       performanceInfo: performanceInfo,
       newVisit: _inferNewVisit(newVisit),
@@ -586,6 +603,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -616,6 +634,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -656,6 +675,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -693,6 +713,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -737,6 +758,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -787,6 +809,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -821,6 +844,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -853,6 +877,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
         newVisit: _inferNewVisit(newVisit),
       ),
     );
@@ -891,6 +916,7 @@ class MatomoTracker {
         path: _inferPath(path),
         campaign: campaign,
         dimensions: dimensions,
+        userLocale: userLocale,
       ),
     );
   }

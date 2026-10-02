@@ -1,5 +1,41 @@
 # Changelog
 
+## [6.1.1]
+
+* feat: handle optOut in initialization by @TesteurManiak in https://github.com/Floating-Dartists/matomo-tracker/pull/203
+* build(deps): bump device_info_plus and package_info_plus by @dependabot[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/205
+* deps: bump dependencies and prepare v6.1.1 by @TesteurManiak in https://github.com/Floating-Dartists/matomo-tracker/pull/208
+
+**Full Changelog**: https://github.com/Floating-Dartists/matomo-tracker/compare/6.1.0...6.1.1
+
+## [6.1.0]
+
+* Issue #186 - Correctly report the device's local time by @krozett in https://github.com/Floating-Dartists/matomo-tracker/pull/187
+* docs(contributor): contributors readme action update by @github-actions[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/188
+* Issue #189: bugfix: reset/initialize visitor when setCookieless is called by @stefangaller in https://github.com/Floating-Dartists/matomo-tracker/pull/190
+* docs(contributor): contributors readme action update by @github-actions[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/191
+* Add support for custom user language by @streinhard in https://github.com/Floating-Dartists/matomo-tracker/pull/192
+* docs(contributor): contributors readme action update by @github-actions[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/193
+* build(deps): bump device_info_plus from 11.5.0 to 12.1.0 by @dependabot[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/198
+* build(deps): bump package_info_plus from 8.3.1 to 9.0.0 by @dependabot[bot] in https://github.com/Floating-Dartists/matomo-tracker/pull/199
+
+## New Contributors
+* @krozett made their first contribution in https://github.com/Floating-Dartists/matomo-tracker/pull/187
+* @stefangaller made their first contribution in https://github.com/Floating-Dartists/matomo-tracker/pull/190
+* @streinhard made their first contribution in https://github.com/Floating-Dartists/matomo-tracker/pull/192
+
+**Full Changelog**: https://github.com/Floating-Dartists/matomo-tracker/compare/6.0.0...6.1.0
+
+## [6.0.0]
+
+* Change dispatchActions during initialization to unawaited by @skiluk in https://github.com/Floating-Dartists/matomo-tracker/pull/179
+* docs(contributor): contributors readme action update by @github-actions in https://github.com/Floating-Dartists/matomo-tracker/pull/180
+* build(deps): bump custom_lint from 0.6.10 to 0.7.0 by @dependabot in https://github.com/Floating-Dartists/matomo-tracker/pull/182
+* chore: supersed #183 and bump dependencies by @TesteurManiak in https://github.com/Floating-Dartists/matomo-tracker/pull/185
+
+## New Contributors
+* @skiluk made their first contribution in https://github.com/Floating-Dartists/matomo-tracker/pull/179
+
 ## [6.0.0-dev.1]
 
 * 173 feat improve matomoobserver to dispense with traceableclientmixin by @TesteurManiak in https://github.com/Floating-Dartists/matomo-tracker/pull/174
