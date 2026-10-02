@@ -444,6 +444,13 @@ await MatomoTracker.instance.initialize(
     </td></tr>
 <tr>
     <td align="center">
+        <a href="https://github.com/antonanders">
+            <img src="https://avatars.githubusercontent.com/u/3750425?v=4" width="100;" alt="antonanders"/>
+            <br />
+            <sub><b>Anton Anders</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/luckyrat">
             <img src="https://avatars.githubusercontent.com/u/1211375?v=4" width="100;" alt="luckyrat"/>
             <br />
@@ -476,13 +483,6 @@ await MatomoTracker.instance.initialize(
             <img src="https://avatars.githubusercontent.com/u/1260818?v=4" width="100;" alt="kuhnroyal"/>
             <br />
             <sub><b>Peter Leibiger</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/streinhard">
-            <img src="https://avatars.githubusercontent.com/u/12693991?v=4" width="100;" alt="streinhard"/>
-            <br />
-            <sub><b>Stefan Reinhard</b></sub>
         </a>
     </td></tr>
 <tr>
